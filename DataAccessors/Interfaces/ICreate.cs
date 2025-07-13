@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Interface for ICRUD method for creating entries in the database
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="T">Identfier</typeparam>
 	public interface ICreate<T>
 	{
 		/// <summary>

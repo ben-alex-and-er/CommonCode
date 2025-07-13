@@ -4,11 +4,12 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<PackageId>DataAccessors</PackageId>
-		<Version>0.0.0</Version>
+		<Version>1.1.1</Version>
 		<Authors>Ben Alexander</Authors>
 		<Description>DataAccessors is a reusable .NET library that provides a consistent and efficient pattern for interacting with data sources across projects. Designed to streamline common data access operations, this package includes base interfaces, abstract classes, and utility components that simplify CRUD operations, data retrieval, and query handling. Ideal for building maintainable, testable, and decoupled data layers, DataAccessors helps enforce best practices while reducing boilerplate code.</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryUrl>https://github.com/ben-alex-and-er/CommonCode</RepositoryUrl>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 </Project>
