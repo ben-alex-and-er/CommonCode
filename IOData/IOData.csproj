@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<PackageId>IOData</PackageId>
+		<PackageId>BenAlex.IOData</PackageId>
 		<Version>0.0.0</Version>
 		<Authors>Ben Alexander</Authors>
 		<Description>IOData is a lightweight .NET library that simplifies input and output data structures across applications. It provides a standardized set of models and utilities for handling API request and response payloads, filters, pagination, sorting, and metadata. Designed to promote consistency and reduce repetitive code, IOData is ideal for building clean, maintainable APIs and services.</Description>
