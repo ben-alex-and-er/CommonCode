@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.Configuration;
 
 
-namespace Database.Configuration
+namespace DbCore.Configuration
 {
 	/// <summary>
 	/// Retrieves the MySQL connection string from environment variables.
 	/// Uses key: "ConnectionString"
 	/// </summary>
-	public class MySQLConnection
+	public class MySqlConnection
 	{
 		private const string KEY = "ConnectionString";
 
@@ -39,10 +39,10 @@ namespace Database.Configuration
 
 
 		/// <summary>
-		/// Constructor for <see cref="MySQLConnection"/>
+		/// Constructor for <see cref="MySqlConnection"/>
 		/// </summary>
 		/// <param name="configuration"></param>
-		public MySQLConnection(IConfiguration configuration)
+		public MySqlConnection(IConfiguration configuration)
 		{
 			configuration.Bind(KEY, this);
 		}
