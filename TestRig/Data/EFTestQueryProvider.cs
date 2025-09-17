@@ -24,7 +24,7 @@ namespace TestRig.Data
 
 		public IQueryable CreateQuery(Expression expression)
 		{
-			var elementType = expression.Type.GetGenericArguments().First();
+			var elementType = expression.Type.GetGenericArguments()[0];
 
 			var queryableType = typeof(EFTestQueryable<>).MakeGenericType(elementType);
 
@@ -47,10 +47,8 @@ namespace TestRig.Data
 			if (typeof(TResult).IsGenericType && typeof(TResult).GetGenericTypeDefinition() == typeof(Task<>))
 			{
 				var resultType = typeof(TResult).GetGenericArguments()[0];
-				var taskFromResult = typeof(Task).GetMethods()
-					.Where(methodInfo => methodInfo.Name == nameof(Task.FromResult))
-					.Where(methodInfo => methodInfo.IsGenericMethod)
-					.Single()
+				var taskFromResult = typeof(Task)
+					.GetMethod(nameof(Task.FromResult))!
 					.MakeGenericMethod(resultType);
 
 				return (TResult)taskFromResult.Invoke(null, [result])!;
