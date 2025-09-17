@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections;
 using TestRig.Extensions;
 
 
@@ -10,8 +11,9 @@ namespace Unit_Tests.TestRig
 
 
 		[Test]
-		public void AsEFTestQueryableTests()
+		public void AsEFTestQueryable_Test()
 		{
+			// Arrange/Act
 			var queryable = numbers.AsEFTestQueryable();
 
 			Assert.That(queryable, Is.Not.Null);
@@ -19,35 +21,78 @@ namespace Unit_Tests.TestRig
 		}
 
 		[Test]
-		public void AsEFTestQueryableLINQTests()
+		public void AsEFTestQueryable_ElementTypeTest()
 		{
+			// Arrange
 			var queryable = numbers.AsEFTestQueryable();
 
-			var evens = queryable
-				.Where(x => x % 2 == 0)
-				.ToList();
+			// Act
+			var result = queryable.ElementType;
 
-			Assert.That(evens, Is.EquivalentTo([2, 4]));
+			// Assert
+			Assert.That(result, Is.EqualTo(typeof(int)));
 		}
 
 		[Test]
-		public async Task AsEFTestQueryableToListAsyncTests()
+		public void AsEFTestQueryable_GetEnumeratorTest()
 		{
+			// Arrange
+			var queryable = numbers.AsEFTestQueryable();
+			var result = new List<int>();
+
+			// Act
+			var enumerator = ((IEnumerable)queryable).GetEnumerator();
+
+			while (enumerator.MoveNext())
+			{
+				result.Add((int)enumerator.Current!);
+			}
+
+			// Assert
+			Assert.That(result, Is.EquivalentTo(numbers));
+		}
+
+
+		[Test]
+		public void AsEFTestQueryable_LINQTest()
+		{
+			// Arrange
 			var queryable = numbers.AsEFTestQueryable();
 
+			// Act
+			var result = queryable
+				.Where(x => x % 2 == 0)
+				.Select(x => (uint)x)
+				.ToList();
+
+			// Assert
+			Assert.That(result, Is.EquivalentTo([2, 4]));
+		}
+
+		[Test]
+		public async Task AsEFTestQueryable_ToListAsyncTest()
+		{
+			// Arrange
+			var queryable = numbers.AsEFTestQueryable();
+
+			// Act
 			var result = await queryable.ToListAsync();
 
+			// Assert
 			Assert.That(result, Is.EquivalentTo(numbers));
 		}
 
 		[Test]
-		public async Task AsEFTestQueryableFirstOrDefaultAsyncTests()
+		public async Task AsEFTestQueryable_FirstOrDefaultAsyncTest()
 		{
+			// Arrange
 			var queryable = numbers.AsEFTestQueryable();
 
-			var first = await queryable.FirstOrDefaultAsync();
+			// Act
+			var result = await queryable.FirstOrDefaultAsync();
 
-			Assert.That(first, Is.EqualTo(1));
+			// Assert
+			Assert.That(result, Is.EqualTo(1));
 		}
 	}
 }
