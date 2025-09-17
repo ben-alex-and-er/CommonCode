@@ -1,56 +1,42 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
-using System.Collections;
+﻿using System.Collections;
 using System.Linq.Expressions;
 
 
 namespace TestRig.Data
 {
-	internal class EFTestQueryable<T>(EnumerableQuery<T> enumerableQuery) : IOrderedQueryable<T>, IAsyncQueryProvider, IAsyncEnumerable<T>
+	/// <summary>
+	/// <see cref="IQueryable{T}"/> to mimic Entity Framework <see cref="IQueryable{T}"/>
+	/// </summary>
+	/// <typeparam name="T">Type of item in collection</typeparam>
+	internal class EFTestQueryable<T> : IOrderedQueryable<T>, IAsyncEnumerable<T>
 	{
-		Type IQueryable.ElementType => (enumerableQuery as IQueryable).ElementType;
-
-		Expression IQueryable.Expression => (enumerableQuery as IQueryable).Expression;
-
-		IQueryProvider IQueryable.Provider => this;
+		private readonly IQueryable<T> innerQueryable;
 
 
-		IQueryable IQueryProvider.CreateQuery(Expression expression)
+		public Type ElementType => typeof(T);
+
+		public Expression Expression => innerQueryable.Expression;
+
+		public IQueryProvider Provider => new EFTestQueryProvider(innerQueryable.Provider);
+
+
+		/// <summary>
+		/// Constructor for <see cref="EFTestQueryable{T}"/>
+		/// </summary>
+		/// <param name="enumerable"></param>
+		public EFTestQueryable(IEnumerable<T> enumerable)
 		{
-			var elementType = expression.Type.GetGenericArguments().First();
-			var t = typeof(EFTestQueryable<>).MakeGenericType(elementType);
-			return Activator.CreateInstance(t, [enumerableQuery]) as IQueryable;
+			innerQueryable = enumerable.AsQueryable();
 		}
 
-		IQueryable<TElement> IQueryProvider.CreateQuery<TElement>(Expression expression)
-			=> new EFTestQueryable<TElement>(new EnumerableQuery<TElement>(expression));
 
-		object? IQueryProvider.Execute(Expression expression)
-			=> (enumerableQuery as IQueryProvider).Execute(expression);
-
-		TResult IQueryProvider.Execute<TResult>(Expression expression)
-			=> (enumerableQuery as IQueryProvider).Execute<TResult>(expression);
-
-		TResult IAsyncQueryProvider.ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken)
-		{
-			var result = (this as IQueryProvider).Execute(expression);
-
-			var taskResultType = typeof(TResult).GetGenericArguments()[0];
-			var taskFromResultMethod = typeof(Task)
-				.GetMethods()
-				.First(m => m.Name == nameof(Task.FromResult) && m.IsGenericMethod)
-				.MakeGenericMethod(taskResultType);
-
-			return (TResult)taskFromResultMethod.Invoke(null, [result])!;
-		}
-
-		IAsyncEnumerator<T> IAsyncEnumerable<T>.GetAsyncEnumerator(CancellationToken cancellationToken)
-			=> enumerableQuery.AsAsyncEnumerable().GetAsyncEnumerator(cancellationToken);
-
-		IEnumerator<T> IEnumerable<T>.GetEnumerator()
-			=> (enumerableQuery as IEnumerable<T>).GetEnumerator();
+		public IEnumerator<T> GetEnumerator()
+			=> innerQueryable.GetEnumerator();
 
 		IEnumerator IEnumerable.GetEnumerator()
-			=> (enumerableQuery as IEnumerable<T>).GetEnumerator();
+			=> innerQueryable.GetEnumerator();
+
+		public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+			=> new EFTestAsyncEnumerator<T>(innerQueryable.GetEnumerator());
 	}
 }

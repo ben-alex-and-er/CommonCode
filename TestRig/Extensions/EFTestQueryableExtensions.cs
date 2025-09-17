@@ -15,6 +15,6 @@
 		/// <param name="enumerable">Collection to convert</param>
 		/// <returns><see cref="IQueryable{T}"/> of input collection</returns>
 		public static IQueryable<T> AsEFTestQueryable<T>(this IEnumerable<T> enumerable)
-			=> new EFTestQueryable<T>(new EnumerableQuery<T>(enumerable));
+			=> new EFTestQueryable<T>(enumerable);
 	}
 }
