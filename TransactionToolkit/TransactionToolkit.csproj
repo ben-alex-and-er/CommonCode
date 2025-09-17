@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<PackageId>BenAlex.TransactionToolkit</PackageId>
+		<Version>0.0.0</Version>
+		<Authors>Ben Alexander</Authors>
+		<Description>TransactionToolkit is a .NET library designed to simplify and standardize transactional operations across your data layer. It provides a consistent and testable pattern for managing database transactions, including support for unit of work, rollback strategies, and nested scopes. TransactionToolkit helps ensure data integrity while reducing boilerplate code, making it ideal for complex business workflows that require reliable and maintainable transaction handling.</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/ben-alex-and-er/CommonCode</RepositoryUrl>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+	</ItemGroup>
+
+</Project>
