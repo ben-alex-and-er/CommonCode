@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.DependencyInjection;
+using System.Data;
+using TestRig.Database;
 using TransactionToolkit;
 using TransactionToolkit.Interfaces;
 
@@ -17,24 +17,15 @@ namespace Unit_Tests.TransactionToolkit
 
 
 		private TestDbContext context;
-		private TransactionCreator<TestDbContext> transactionCreator;
+		private ITransactionCreator transactionCreator;
 
 
 		[SetUp]
 		public void Setup()
 		{
-			var services = new ServiceCollection();
-			services.AddEntityFrameworkInMemoryDatabase();
+			context = new MockDbContextFactory<TestDbContext>()
+				.CreateDbContext();
 
-			var serviceProvider = services.BuildServiceProvider();
-
-			var options = new DbContextOptionsBuilder<TestDbContext>()
-				.UseInMemoryDatabase(Guid.NewGuid().ToString())
-				.ConfigureWarnings(w => w.Ignore(InMemoryEventId.TransactionIgnoredWarning))
-				.UseInternalServiceProvider(serviceProvider)
-				.Options;
-
-			context = new TestDbContext(options);
 			transactionCreator = new TransactionCreator<TestDbContext>(context);
 		}
 
@@ -47,27 +38,25 @@ namespace Unit_Tests.TransactionToolkit
 		[Test]
 		public void CreateTransactionTests()
 		{
-			// Act
-			var transaction = ((ITransactionCreator)transactionCreator).CreateTransaction();
+			// Arrange
+			IDbContextTransaction transaction = null;
 
-			// Assert
-			Assert.That(transaction, Is.Not.Null);
-			Assert.That(transaction, Is.InstanceOf<IDbContextTransaction>());
+			// Act/Assert
+			Assert.Throws<InvalidOperationException>(() => transaction = transactionCreator.CreateTransaction());
 
-			transaction.Dispose();
+			transaction?.Dispose();
 		}
 
 		[Test]
-		public async Task CreateTransactionAsyncTests()
+		public void CreateTransactionAsyncTests()
 		{
-			// Act
-			var transaction = await ((ITransactionCreator)transactionCreator).CreateTransactionAsync();
+			// Arrange
+			IDbContextTransaction transaction = null;
 
-			// Assert
-			Assert.That(transaction, Is.Not.Null);
-			Assert.That(transaction, Is.InstanceOf<IDbContextTransaction>());
+			// Act/Assert
+			Assert.ThrowsAsync<InvalidOperationException>(async () => transaction = await transactionCreator.CreateTransactionAsync());
 
-			await transaction.DisposeAsync();
+			transaction?.Dispose();
 		}
 	}
 }

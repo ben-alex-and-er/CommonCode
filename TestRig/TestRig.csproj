@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<PackageId>BenAlex.TestRig</PackageId>
+		<Version>0.0.0</Version>
+		<Authors>Ben Alexander</Authors>
+		<Description>TestRig is a lightweight utility toolkit designed to simplify and streamline unit testing in .NET applications. It provides a flexible set of helpers for setting up test environments, generating test data, creating mocks, and organizing test fixtures — all in one centralized and reusable component.</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/ben-alex-and-er/CommonCode</RepositoryUrl>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" />
+	</ItemGroup>
+
+</Project>
