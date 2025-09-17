@@ -16,12 +16,11 @@
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
 		<PackageReference Include="NUnit" Version="4.4.0" />
 		<PackageReference Include="NUnit3TestAdapter" Version="5.1.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\DataAccessors\DataAccessors.csproj" />
+		<ProjectReference Include="..\TestRig\TestRig.csproj" />
 		<ProjectReference Include="..\TransactionToolkit\TransactionToolkit.csproj" />
 	</ItemGroup>
 
