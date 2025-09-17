@@ -13,13 +13,12 @@
 	<ItemGroup>
 		<PackageReference Include="coverlet.collector" Version="6.0.0" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-		<PackageReference Include="NUnit" Version="*" />
-		<PackageReference Include="NUnit3TestAdapter" Version="*" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
+		<PackageReference Include="NUnit" Version="4.4.0" />
+		<PackageReference Include="NUnit3TestAdapter" Version="5.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\DataAccessors\DataAccessors.csproj" />
+		<ProjectReference Include="..\DataAccessors\DataAccessors.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
