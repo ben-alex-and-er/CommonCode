@@ -9,20 +9,26 @@ namespace Unit_Tests.DataAccessors
 		[TestCaseSource(typeof(CRUDExtensionTestCaseSources), nameof(CRUDExtensionTestCaseSources.UpsertTest_2TypesCaseSource))]
 		public async Task UpsertTests_2Types(int identifier, int update, bool expectedResult)
 		{
+			// Arrange
 			ICRUD<int, int> fakeCrud = new FakeCRUD();
 
+			// Act
 			var result = await fakeCrud.Upsert(identifier, update);
 
+			// Assert
 			Assert.That(result, Is.EqualTo(expectedResult));
 		}
 
 		[TestCaseSource(typeof(CRUDExtensionTestCaseSources), nameof(CRUDExtensionTestCaseSources.UpsertTest_3TypesCaseSource))]
 		public async Task UpsertTests_3Types(int identifier, int updateIdentifier, int update, bool expectedResult)
 		{
+			// Arrange
 			ICRUD<int, int, int> fakeCrud = new FakeCRUD();
 
+			// Act
 			var result = await fakeCrud.Upsert(identifier, updateIdentifier, update);
 
+			// Assert
 			Assert.That(result, Is.EqualTo(expectedResult));
 		}
 	}
