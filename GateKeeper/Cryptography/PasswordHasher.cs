@@ -32,7 +32,7 @@ namespace GateKeeper.Cryptography
 
 			var hash = Rfc2898DeriveBytes.Pbkdf2(password, salt, iterations, algorithm, hashSize);
 
-			return new(salt, iterations, HashAlgorithm, hashSize, hash);
+			return new(salt, iterations, algorithm, hashSize, hash);
 		}
 
 		/// <summary>
