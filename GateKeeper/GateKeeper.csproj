@@ -4,7 +4,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<PackageId>BenAlex.GateKeeper</PackageId>
-		<Version>0.0.0</Version>
+		<Version>1.0.0</Version>
 		<Authors>Ben Alexander</Authors>
 		<Description>GateKeeper is a lightweight, modular security library for .NET applications. It provides essential tools for handling authentication, password hashing, and access control, designed with flexibility and clean architecture in mind. Whether you're building APIs, Blazor apps, or custom identity systems, GateKeeper helps enforce secure practices with minimal overhead.</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
