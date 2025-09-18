@@ -20,6 +20,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\DataAccessors\DataAccessors.csproj" />
+		<ProjectReference Include="..\GateKeeper\GateKeeper.csproj" />
 		<ProjectReference Include="..\TestRig\TestRig.csproj" />
 		<ProjectReference Include="..\TransactionToolkit\TransactionToolkit.csproj" />
 	</ItemGroup>
