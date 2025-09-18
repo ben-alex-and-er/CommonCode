@@ -17,14 +17,13 @@ jobs:
         uses: actions/setup-dotnet@v4
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore CommonCode/CommonCode.sln
 
       - name: Build projects
-        run: dotnet build --configuration Release
+        run: dotnet build CommonCode/CommonCode.sln --configuration Release
 
       - name: Pack all projects
-        run: .github\scripts\pack-projects.cmd
-        shell: cmd
+        run: dotnet pack CommonCode/CommonCode.sln --configuration Release --no-build -o ./artifacts
 
       - name: Push packages to NuGet
         run: .github\scripts\push-packages.cmd ${{ secrets.NUGET_TOKEN }}
