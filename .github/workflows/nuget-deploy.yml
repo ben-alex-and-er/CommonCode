@@ -1,0 +1,32 @@
+name: Nuget Deploy
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  build:
+    name: Build, Pack and Deploy
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build projects
+        run: dotnet build --configuration Release
+
+      - name: Pack all projects
+        run: .github\scripts\pack-projects.cmd
+        shell: cmd
+
+      - name: Push packages to NuGet
+        run: .github\scripts\push-packages.cmd ${{ secrets.NUGET_TOKEN }}
+        shell: cmd
+
