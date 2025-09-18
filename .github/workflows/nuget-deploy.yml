@@ -23,6 +23,7 @@ jobs:
         run: dotnet pack CommonCode/CommonCode.sln --configuration Release --no-build -o ./artifacts
 
       - name: Push packages to NuGet
-        run: .github\scripts\push-packages.cmd "${{ secrets.NUGET_TOKEN }}"
+        run: .github\scripts\push-packages.cmd
         shell: cmd
-
+        env:
+          NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
